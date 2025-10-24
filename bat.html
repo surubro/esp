@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battery Life Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Battery Life Calculator</h2>
+    <label for="battery">Battery Capacity (mAh):</label>
+    <input type="number" id="battery" placeholder="e.g. 2000" />
+
+    <label for="current">Device Current Draw (mA):</label>
+    <input type="number" id="current" placeholder="e.g. 100" />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const battery = parseFloat(document.getElementById('battery').value);
+      const current = parseFloat(document.getElementById('current').value);
+      const resultDiv = document.getElementById('result');
+
+      if (!battery || !current || battery <= 0 || current <= 0) {
+        resultDiv.innerHTML = "⚠️ Please enter valid numbers.";
+        return;
+      }
+
+      // Basic formula: time (hours) = capacity (mAh) / current (mA)
+      const hours = battery / current;
+      const totalMinutes = hours * 60;
+      const h = Math.floor(hours);
+      const m = Math.round((hours - h) * 60);
+
+      resultDiv.innerHTML = `
+        🔋 Estimated run time:<br>
+        <strong>${h} hours ${m} minutes</strong><br>
+        (${hours.toFixed(2)} hours total)
+      `;
+    }
+  </script>
+</body>
+</html>
